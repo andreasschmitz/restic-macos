@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		159211B72AE99BE90075A1E5 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159211B62AE99BE90075A1E5 /* main.swift */; };
+		4972BCE62AF6A6D70022C8A0 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972BCE52AF6A6D70022C8A0 /* main.swift */; };
+		4972BCEE2AF6AD6C0022C8A0 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 4972BCED2AF6AD6C0022C8A0 /* KeychainAccess */; };
+		4972BCF12AF6AD990022C8A0 /* stuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972BCF02AF6AD990022C8A0 /* stuff.swift */; };
+		4972BCF22AF6ADE20022C8A0 /* stuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4972BCF02AF6AD990022C8A0 /* stuff.swift */; };
+		4972BCF52AF6B24C0022C8A0 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 4972BCF42AF6B24C0022C8A0 /* KeychainAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,11 +25,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
+		4972BCE12AF6A6D70022C8A0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		159211B32AE99BE90075A1E5 /* ResticWrapper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ResticWrapper; sourceTree = BUILT_PRODUCTS_DIR; };
+		159211B32AE99BE90075A1E5 /* ResticBackupWrapper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ResticBackupWrapper; sourceTree = BUILT_PRODUCTS_DIR; };
 		159211B62AE99BE90075A1E5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		15C340EF2AF6C14F001B19AC /* ResticBackupWrapper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ResticBackupWrapper.entitlements; sourceTree = "<group>"; };
+		15C340F02AF6C159001B19AC /* ResticCheckWrapper.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = ResticCheckWrapper.entitlements; sourceTree = "<group>"; };
+		4972BCE32AF6A6D70022C8A0 /* ResticCheckWrapper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ResticCheckWrapper; sourceTree = BUILT_PRODUCTS_DIR; };
+		4972BCE52AF6A6D70022C8A0 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4972BCF02AF6AD990022C8A0 /* stuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stuff.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +51,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4972BCEE2AF6AD6C0022C8A0 /* KeychainAccess in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4972BCE02AF6A6D70022C8A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4972BCF52AF6B24C0022C8A0 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,33 +69,62 @@
 		159211AA2AE99BE90075A1E5 = {
 			isa = PBXGroup;
 			children = (
-				159211B52AE99BE90075A1E5 /* ResticWrapper */,
+				4972BCEF2AF6AD750022C8A0 /* Common */,
+				159211B52AE99BE90075A1E5 /* ResticBackupWrapper */,
+				4972BCE42AF6A6D70022C8A0 /* ResticCheckWrapper */,
 				159211B42AE99BE90075A1E5 /* Products */,
+				4972BCF32AF6B24C0022C8A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		159211B42AE99BE90075A1E5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				159211B32AE99BE90075A1E5 /* ResticWrapper */,
+				159211B32AE99BE90075A1E5 /* ResticBackupWrapper */,
+				4972BCE32AF6A6D70022C8A0 /* ResticCheckWrapper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		159211B52AE99BE90075A1E5 /* ResticWrapper */ = {
+		159211B52AE99BE90075A1E5 /* ResticBackupWrapper */ = {
 			isa = PBXGroup;
 			children = (
+				15C340EF2AF6C14F001B19AC /* ResticBackupWrapper.entitlements */,
 				159211B62AE99BE90075A1E5 /* main.swift */,
 			);
-			path = ResticWrapper;
+			path = ResticBackupWrapper;
+			sourceTree = "<group>";
+		};
+		4972BCE42AF6A6D70022C8A0 /* ResticCheckWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				15C340F02AF6C159001B19AC /* ResticCheckWrapper.entitlements */,
+				4972BCE52AF6A6D70022C8A0 /* main.swift */,
+			);
+			path = ResticCheckWrapper;
+			sourceTree = "<group>";
+		};
+		4972BCEF2AF6AD750022C8A0 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4972BCF02AF6AD990022C8A0 /* stuff.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4972BCF32AF6B24C0022C8A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		159211B22AE99BE90075A1E5 /* ResticWrapper */ = {
+		159211B22AE99BE90075A1E5 /* ResticBackupWrapper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 159211BA2AE99BE90075A1E5 /* Build configuration list for PBXNativeTarget "ResticWrapper" */;
+			buildConfigurationList = 159211BA2AE99BE90075A1E5 /* Build configuration list for PBXNativeTarget "ResticBackupWrapper" */;
 			buildPhases = (
 				159211AF2AE99BE90075A1E5 /* Sources */,
 				159211B02AE99BE90075A1E5 /* Frameworks */,
@@ -77,9 +134,32 @@
 			);
 			dependencies = (
 			);
-			name = ResticWrapper;
+			name = ResticBackupWrapper;
+			packageProductDependencies = (
+				4972BCED2AF6AD6C0022C8A0 /* KeychainAccess */,
+			);
 			productName = ResticWrapper;
-			productReference = 159211B32AE99BE90075A1E5 /* ResticWrapper */;
+			productReference = 159211B32AE99BE90075A1E5 /* ResticBackupWrapper */;
+			productType = "com.apple.product-type.tool";
+		};
+		4972BCE22AF6A6D70022C8A0 /* ResticCheckWrapper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4972BCE72AF6A6D70022C8A0 /* Build configuration list for PBXNativeTarget "ResticCheckWrapper" */;
+			buildPhases = (
+				4972BCDF2AF6A6D70022C8A0 /* Sources */,
+				4972BCE02AF6A6D70022C8A0 /* Frameworks */,
+				4972BCE12AF6A6D70022C8A0 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ResticCheckWrapper;
+			packageProductDependencies = (
+				4972BCF42AF6B24C0022C8A0 /* KeychainAccess */,
+			);
+			productName = ResticCheckWrapper;
+			productReference = 4972BCE32AF6A6D70022C8A0 /* ResticCheckWrapper */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -89,11 +169,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					159211B22AE99BE90075A1E5 = {
 						CreatedOnToolsVersion = 15.0.1;
+					};
+					4972BCE22AF6A6D70022C8A0 = {
+						CreatedOnToolsVersion = 14.3.1;
 					};
 				};
 			};
@@ -106,11 +189,15 @@
 				Base,
 			);
 			mainGroup = 159211AA2AE99BE90075A1E5;
+			packageReferences = (
+				4972BCEC2AF6AD6C0022C8A0 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+			);
 			productRefGroup = 159211B42AE99BE90075A1E5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				159211B22AE99BE90075A1E5 /* ResticWrapper */,
+				159211B22AE99BE90075A1E5 /* ResticBackupWrapper */,
+				4972BCE22AF6A6D70022C8A0 /* ResticCheckWrapper */,
 			);
 		};
 /* End PBXProject section */
@@ -120,7 +207,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4972BCF22AF6ADE20022C8A0 /* stuff.swift in Sources */,
 				159211B72AE99BE90075A1E5 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4972BCDF2AF6A6D70022C8A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4972BCF12AF6AD990022C8A0 /* stuff.swift in Sources */,
+				4972BCE62AF6A6D70022C8A0 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,10 +345,14 @@
 		159211BB2AE99BE90075A1E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VJDP295K2L;
-				ENABLE_HARDENED_RUNTIME = YES;
+				CODE_SIGN_ENTITLEMENTS = ResticBackupWrapper/ResticBackupWrapper.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -259,10 +360,48 @@
 		159211BC2AE99BE90075A1E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VJDP295K2L;
-				ENABLE_HARDENED_RUNTIME = YES;
+				CODE_SIGN_ENTITLEMENTS = ResticBackupWrapper/ResticBackupWrapper.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		4972BCE82AF6A6D70022C8A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ResticCheckWrapper/ResticCheckWrapper.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		4972BCE92AF6A6D70022C8A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = ResticCheckWrapper/ResticCheckWrapper.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -279,7 +418,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		159211BA2AE99BE90075A1E5 /* Build configuration list for PBXNativeTarget "ResticWrapper" */ = {
+		159211BA2AE99BE90075A1E5 /* Build configuration list for PBXNativeTarget "ResticBackupWrapper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				159211BB2AE99BE90075A1E5 /* Debug */,
@@ -288,7 +427,40 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		4972BCE72AF6A6D70022C8A0 /* Build configuration list for PBXNativeTarget "ResticCheckWrapper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4972BCE82AF6A6D70022C8A0 /* Debug */,
+				4972BCE92AF6A6D70022C8A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4972BCEC2AF6AD6C0022C8A0 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4972BCED2AF6AD6C0022C8A0 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4972BCEC2AF6AD6C0022C8A0 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		4972BCF42AF6B24C0022C8A0 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4972BCEC2AF6AD6C0022C8A0 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 159211AB2AE99BE90075A1E5 /* Project object */;
 }

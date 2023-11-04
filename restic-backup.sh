@@ -1,14 +1,18 @@
 #!/bin/bash
+
+set -e          # Exit immediately if a command exits with a non-zero status.
+set -o pipefail # If any command in a pipeline returns a non-zero exit code, the return code of the entire pipeline is the exit code of the last failed command.
+
 # Makes sure that no one overwrites commands
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=/opt/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
 # Configuration
 PID_FILE=$BACKUP_CONF_DIR/run.pid
-TIMESTAMP_FILE=$BACKUP_CONF_DIR/backup_timestamp
 EXCLUDE_FILE=$BACKUP_CONF_DIR/exclude.txt
 INCLUDE_FILE=$BACKUP_CONF_DIR/backup.txt
 GLOBAL_FLAGS="--verbose"
+
 
 # Assert that all needed environment variables are set.
 assert_envvars() {
@@ -26,8 +30,7 @@ function anybar {
 }
 
 assert_envvars \
-BACKUP_ALLOWED_WIFI_NAMES RESTIC_REPOSITORY RESTIC_PASSWORD_COMMAND RESTIC_BACKUP_TAG RESTIC_RETENTION_HOURS RESTIC_RETENTION_DAYS RESTIC_RETENTION_WEEKS RESTIC_RETENTION_MONTHS RESTIC_RETENTION_YEARS
-
+RESTIC_REPOSITORY RESTIC_PASSWORD BACKUP_RETENTION_HOURS BACKUP_RETENTION_DAYS BACKUP_RETENTION_WEEKS BACKUP_RETENTION_MONTHS BACKUP_RETENTION_YEARS
 
 
 cat $INCLUDE_FILE
@@ -40,12 +43,6 @@ fi
 if [ ! -f $RESTIC_REPOSITORY_FILE ]; then
     echo "File $RESTIC_REPOSITORY_FILE does not exist."
     exit 3
-fi
-
-eval "$RESTIC_PASSWORD_COMMAND" > /dev/null 2>&1
-if [ ! $? -eq 0  ]; then
-    echo "Restic backup cannot be found in Keychain. Please enter the password below."
-    security add-generic-password -s backup-restic-password-repository -a restic_backup -w
 fi
 
 
@@ -69,12 +66,16 @@ if [[ $DEFAULT_INTERFACE == "" ]]; then
     exit 6
 fi
 
-# Check if the default route is a wifi. If so and the network name is not on the allow list, we exit.
-networksetup -getairportnetwork $DEFAULT_INTERFACE 1>/dev/null 2>&1
-if [[ $? -eq 0 && ! $(networksetup -getairportnetwork $DEFAULT_INTERFACE | grep -E "$BACKUP_ALLOWED_WIFI_NAMES") ]]; then
-    echo $(date +"%Y-%m-%d %T") "The current Wi-Fi network is not on the allow list. Exiting…"
-    exit 7
+
+if [[ -z $BACKUP_ALLOWED_WIFI_NAMES ]]; then
+  # Check if the default route is a wifi. If so and the network name is not on the allow list, we exit.
+  networksetup -getairportnetwork $DEFAULT_INTERFACE 1>/dev/null 2>&1
+  if [[ $? -eq 0 && ! $(networksetup -getairportnetwork $DEFAULT_INTERFACE | grep -E "$BACKUP_ALLOWED_WIFI_NAMES") ]]; then
+      echo $(date +"%Y-%m-%d %T") "The current Wi-Fi network is not on the allow list. Exiting…"
+      exit 7
+  fi
 fi
+
 
 if [[ $BACKUP_ALLOW_ON_BATTERY == "0" && $(pmset -g ps | head -1) =~ "Battery" ]]; then
   echo $(date +"%Y-%m-%d %T") "Computer is running on battery power. Exiting…"
@@ -84,15 +85,17 @@ fi
 echo $$ > $PID_FILE
 echo $(date +"%Y-%m-%d %T") "Starting backup…"
 # TODO: Increase stdout verbosity. Currently nothing is listed in the log file apart from start and end.
-/opt/homebrew/bin/restic backup $GLOBAL_FLAGS \
+restic backup $GLOBAL_FLAGS \
   --no-scan \
   --files-from $INCLUDE_FILE \
   --exclude-file $EXCLUDE_FILE
 
-if [[ $? -eq 0 ]]; then
+RESTIC_STATUS=$?
+echo "Restic finished with status $RESTIC_STATUS"
+if [[ $RESTIC_STATUS -eq 0 ]]; then
   # 0 when the backup was successful (snapshot with all source files created)
   anybar green
-elif [[ $? -eq 3 ]]; then
+elif [[ $RESTIC_STATUS -eq 3 ]]; then
   # 3 when some source files could not be read (incomplete snapshot with remaining files created)
   anybar orange
 else
@@ -103,13 +106,13 @@ fi
 
 # Clean up old snapshots
 echo $(date +"%Y-%m-%d %T") "Remove old backups…"
-/opt/homebrew/bin/restic forget $GLOBAL_FLAGS \
+restic forget $GLOBAL_FLAGS \
   --prune \
-  --keep-hourly "$RESTIC_RETENTION_HOURS" \
-  --keep-daily "$RESTIC_RETENTION_DAYS" \
-  --keep-weekly "$RESTIC_RETENTION_WEEKS" \
-  --keep-monthly "$RESTIC_RETENTION_MONTHS" \
-  --keep-yearly "$RESTIC_RETENTION_YEARS"
+  --keep-hourly "$BACKUP_RETENTION_HOURS" \
+  --keep-daily "$BACKUP_RETENTION_DAYS" \
+  --keep-weekly "$BACKUP_RETENTION_WEEKS" \
+  --keep-monthly "$BACKUP_RETENTION_MONTHS" \
+  --keep-yearly "$BACKUP_RETENTION_YEARS"
 
 
 echo $(date +"%Y-%m-%d %T") "Backup finished"

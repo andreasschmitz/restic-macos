@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>Label</key>
+	<string>local.restic-backup</string>
+	<key>LowPriorityBackgroundIO</key>
+	<true/>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/sh</string>
+		<string>-c</string>
+		<string>/bin/bash -c "source /opt/restic/config/env.sh &amp;&amp; /opt/restic/bin/ResticBackupWrapper"</string>
+	</array>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/Library/Logs/restic/backup_stderr.log</string>
+	<key>StandardOutPath</key>
+	<string>/Library/Logs/restic/backup_stdout.log</string>
+	<key>StartInterval</key>
+	<integer>10800</integer>
+</dict>
+</plist>

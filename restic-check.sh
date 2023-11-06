@@ -30,12 +30,6 @@ if [ ! -f $RESTIC_REPOSITORY_FILE ]; then
 	exit 3
 fi
 
-eval "$RESTIC_PASSWORD_COMMAND" > /dev/null 2>&1
-if [ ! $? -eq 0  ]; then
-	echo "Restic backup cannot be found in Keychain. Please enter the password below."
-	security add-generic-password -s backup-restic-password-repository -a restic_backup -w
-fi
-
 
 # Checks which interface is currently used as default route. Exits if there isn't one.
 DEFAULT_INTERFACE=$(route get default 2>/dev/null | grep interface | awk '{print $2}')
@@ -44,7 +38,7 @@ if [[ $DEFAULT_INTERFACE == "" ]]; then
 	exit 6
 fi
 
-if [[ -z $BACKUP_ALLOWED_WIFI_NAMES ]]; then
+if [[ "$BACKUP_ALLOWED_WIFI_NAMES" ]]; then
   # Check if the default route is a wifi. If so and the network name is not on the allow list, we exit.
   networksetup -getairportnetwork $DEFAULT_INTERFACE 1>/dev/null 2>&1
   if [[ $? -eq 0 && ! $(networksetup -getairportnetwork $DEFAULT_INTERFACE | grep -E "$BACKUP_ALLOWED_WIFI_NAMES") ]]; then

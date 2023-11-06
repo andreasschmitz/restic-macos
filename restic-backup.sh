@@ -67,7 +67,7 @@ if [[ $DEFAULT_INTERFACE == "" ]]; then
 fi
 
 
-if [[ -z $BACKUP_ALLOWED_WIFI_NAMES ]]; then
+if [[ "$BACKUP_ALLOWED_WIFI_NAMES" ]]; then
   # Check if the default route is a wifi. If so and the network name is not on the allow list, we exit.
   networksetup -getairportnetwork $DEFAULT_INTERFACE 1>/dev/null 2>&1
   if [[ $? -eq 0 && ! $(networksetup -getairportnetwork $DEFAULT_INTERFACE | grep -E "$BACKUP_ALLOWED_WIFI_NAMES") ]]; then

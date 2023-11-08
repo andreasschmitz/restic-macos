@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -e          # Exit immediately if a command exits with a non-zero status.
-set -o pipefail # If any command in a pipeline returns a non-zero exit code, the return code of the entire pipeline is the exit code of the last failed command.
-
 # Makes sure that no one overwrites commands
 export PATH=/opt/homebrew/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 

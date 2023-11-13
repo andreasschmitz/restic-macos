@@ -11,6 +11,10 @@ INCLUDE_FILE=$BACKUP_CONF_DIR/backup.txt
 GLOBAL_FLAGS="--verbose"
 
 
+# To detect changes in the log files, we print out the current time stamp…
+echo $(date +"%Y-%m-%d %T") "----"
+echo $(date +"%Y-%m-%d %T") "----" >&2
+
 # Assert that all needed environment variables are set.
 assert_envvars() {
   local varnames=("$@")
@@ -30,7 +34,6 @@ assert_envvars \
 RESTIC_REPOSITORY RESTIC_PASSWORD BACKUP_RETENTION_HOURS BACKUP_RETENTION_DAYS BACKUP_RETENTION_WEEKS BACKUP_RETENTION_MONTHS BACKUP_RETENTION_YEARS
 
 
-cat $INCLUDE_FILE
 # Configuration check
 if [ ! -f $INCLUDE_FILE ]; then
     echo "File $INCLUDE_FILE does not exist."
@@ -78,6 +81,9 @@ if [[ $BACKUP_ALLOW_ON_BATTERY == "0" && $(pmset -g ps | head -1) =~ "Battery" ]
   echo $(date +"%Y-%m-%d %T") "Computer is running on battery power. Exiting…"
   exit 8
 fi
+
+# Remove stale locks
+restic unlock
 
 echo $$ > $PID_FILE
 echo $(date +"%Y-%m-%d %T") "Starting backup…"
